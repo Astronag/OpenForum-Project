@@ -151,7 +151,7 @@ const commentincomment=(req,res)=>{
     {$push:{"comments.$[outer].incomments":{
       "text":req.body.comtext,
       "postedBy":req.body.userId
-    }}},{ "arrayFilters": [{"outer._id": ObjectId(req.body.userId)}]}).exec((err, result) => {
+    }}},{ "arrayFilters": [{"outer._id": req.body.userId}]}).exec((err, result) => {
       if (err) {
         return res.status(400).json({
           error: err,

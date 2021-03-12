@@ -150,9 +150,9 @@ const commentincomment=(req,res)=>{
     "comments.text":req.body.comment,
     "comments.postedBy":req.body.postedBy
     },
-    {"$push":{"comments.$.incomments":{
-      "text":req.body.comtext,
-      "postedBy":req.body.userId
+    {$push:{"comments.$.incomments":{
+      text:req.body.comtext,
+      postedBy:req.body.userId
     }}}).exec((err, result) => {
       if (err) {
         return res.status(400).json({

@@ -17,6 +17,7 @@ const PostSchema = new mongoose.Schema({
       created: { type: Date, default: Date.now },
       postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },
       likes: Number,
+      incomments:[{text:String,postedBy:{ type: mongoose.Schema.ObjectId, ref: "User" }}]
     },
   ],
   postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },

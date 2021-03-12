@@ -145,14 +145,16 @@ const likeacomment = (req, res) => {
 };
 
 const commentincomment=(req,res)=>{
+  
+  var changes={
+    text:req.body.comtext,
+    postedBy:req.body.userId
+  }
   Post.findOneAndUpdate(
     {_id:req.body.postId,
     "comments.text":req.body.comment,
     },
-    {$push:{"comments.$[].incomments":{
-      "text":req.body.comtext,
-      "postedBy":req.body.userId
-    }}},{ new: true }).exec((err, result) => {
+    {$push:{incomments:changes}},{ new: true }).exec((err, result) => {
       if (err) {
         return res.status(400).json({
           error: err,

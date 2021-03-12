@@ -26,3 +26,11 @@ https://documenter.getpostman.com/view/12533181/Tz5p7JUH
 
 ## ER diagram
 ![alt text](https://github.com/Himanshuranjan30/OpenForum-Project/blob/development/open_forum_er_diagram.png?raw=true)
+
+## Instructions to run
+- You can either run it locally using the given commands.  
+```npm install```  
+```node app.js```  
+
+- You can also check the api using our hosted url:
+https://openforumsocial.herokuapp.com

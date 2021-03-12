@@ -153,7 +153,7 @@ const commentincomment=(req,res)=>{
     {$push:{"comments.$.incomments":{
       text:req.body.comtext,
       postedBy:req.body.userId
-    }}}).exec((err, result) => {
+    }}},{ new: true }).exec((err, result) => {
       if (err) {
         return res.status(400).json({
           error: err,

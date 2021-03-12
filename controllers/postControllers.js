@@ -147,11 +147,12 @@ const likeacomment = (req, res) => {
 const commentincomment=(req,res)=>{
   Post.findOneAndUpdate(
     {_id:req.body.postId,
+    "comments.text":req.body.comment,
     },
-    {$push:{"comments.$[outer].incomments":{
+    {$push:{"comments.$.incomments.$":{
       "text":req.body.comtext,
       "postedBy":req.body.userId
-    }}},{ "arrayFilters": [{"outer._id": req.body.userId}]}).exec((err, result) => {
+    }}},{ new: true }).exec((err, result) => {
       if (err) {
         return res.status(400).json({
           error: err,

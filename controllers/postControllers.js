@@ -149,7 +149,7 @@ const commentincomment=(req,res)=>{
     {_id:req.body.postId,
     "comments.text":req.body.comment,
     },
-    {$push:{"comments.$.incomments.$":{
+    {$push:{"comments.$[].incomments":{
       "text":req.body.comtext,
       "postedBy":req.body.userId
     }}},{ new: true }).exec((err, result) => {

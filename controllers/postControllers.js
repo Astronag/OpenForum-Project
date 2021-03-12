@@ -169,7 +169,7 @@ const comment = (req, res) => {
     text: req.body.comment,
     postedBy: req.body.userId,
     likes: 0,
-    incomments=[]
+    incomments:Array[null]
   };
 
   Post.findByIdAndUpdate(

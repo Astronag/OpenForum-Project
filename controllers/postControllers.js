@@ -147,7 +147,6 @@ const likeacomment = (req, res) => {
 const commentincomment=(req,res)=>{
   Post.findOneAndUpdate(
     {_id:req.body.postId,
-    "comments.text":req.body.comment,
     },
     {$push:{"comments.$[outer].incomments":{
       "text":req.body.comtext,

@@ -144,6 +144,23 @@ const likeacomment = (req, res) => {
   });
 };
 
+const commentincomment=(req,res)=>{
+  Post.findByIdAndUpdate(
+    {_id=req.body.postId,
+    "comments.text":req.body.comment,
+    "comments.postedBy":req.body.postedBy
+    },
+    {$push:{"comments.$.incomments":req.body.commenttext}}).exec((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
+      res.json(result);
+    });
+  
+}
+
 const comment = (req, res) => {
   var commentf = {
     text: req.body.comment,
@@ -209,4 +226,5 @@ module.exports = {
   uncomment,
   isPoster,
   likeacomment,
+  commentincomment
 };

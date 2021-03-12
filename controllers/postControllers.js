@@ -154,7 +154,7 @@ const commentincomment=(req,res)=>{
     {_id:req.body.postId,
     "comments.text":req.body.comment,
     },
-    {$push:{incomments:changes}},{ new: true }).exec((err, result) => {
+    {$push:{"incomments":changes}},{ new: true }).exec((err, result) => {
       if (err) {
         return res.status(400).json({
           error: err,

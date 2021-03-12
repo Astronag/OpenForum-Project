@@ -148,7 +148,6 @@ const commentincomment=(req,res)=>{
   Post.findOneAndUpdate(
     {"_id":req.body.postId,
     "comments.text":req.body.comment,
-    "comments.postedBy":req.body.postedBy
     },
     {$push:{"comments.$.incomments":{
       text:req.body.comtext,

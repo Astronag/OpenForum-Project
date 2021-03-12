@@ -4,12 +4,13 @@ A web application providing a platform for users to socialize.
 
 ## Features
 
-- Users can signup using their google account
-- Users can create a post containing title, description and an image
-- Users can upvote any post and comment
-- Users are rewarded points for each post and comment
-- Users are given badges based on the points they earn
-- A leaderboard showing all the trending posts, all time great users and posts
+- Users can signup using their google account or register with their credentials.
+- Users can create a post containing title, description and an image.
+- Users can upvote any post and comment.
+- Users are rewarded points for each post and comment.
+- Users are given badges based on the points they earn.
+- A leaderboard showing all the popular users at that time.
+- A Trending section showing all the trending posts at that time.
 
 ## Tools and tech
 - Node.js

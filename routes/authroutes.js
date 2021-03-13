@@ -11,9 +11,10 @@ var userProfile;
 
 
 router.get('/success', (req, res) => {res.send(userProfile)
-const userdetails={
-    name=userProfile.user.displayName,
-    email=userProfile.user.emails[0].value
+
+    const userdetails={
+    name=userProfile.displayName,
+    email=userProfile.emails[0].value
 }
 const user=new User(userdetails)
 

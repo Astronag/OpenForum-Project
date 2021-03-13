@@ -6,7 +6,7 @@ const router = express.Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const config=require('../config')
 const User = require("../models/user");
-const { delete } = require("./postroutes");
+
 var userProfile;
 
 

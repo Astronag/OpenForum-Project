@@ -37,7 +37,6 @@ router.get('/auth/google',
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
     
     req.session.user=userProfile
-    console.log(req.session.user)
     res.json(userProfile)
   
     
@@ -46,7 +45,6 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
 )
 
 router.get('/logout', (req, res) =>{ 
-   console.log(req.session.user)
    req.session.destroy()
    res.send("logged out")
 

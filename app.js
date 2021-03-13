@@ -33,8 +33,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.get('/logout',(req,res)=>{
   req.logout()
-  req.user=null
-  req.session.destroy()
   res.json("signed out")
 })
 

@@ -41,8 +41,8 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     res.redirect('/success');
 })
 
-router.route("/logout").get((req,res)=>{
-req.logout()
+router.route("/logout").get(async(req,res)=>{
+await req.logout()
 req.user=null
 res.json("logged out")
 })

@@ -58,11 +58,15 @@ const requireSignin = expressJwt({
   secret: config.jwtSecret,
   userProperty: "auth",
   algorithms:['sha1', 'RS256', 'HS256']
-});
+})(res,req,err=>{
+  if(req.session.user)
+    next()
+})
 
 const hasAuthorization = (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
-  if (!authorized) {
+  const googleauthorized=req.session.user
+  if (authorized==0&&googleauthorized==0) {
     return res.status("403").json({
       error: "User is not authorized",
     });

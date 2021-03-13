@@ -6,6 +6,7 @@ const bodyParser=require('body-parser')
 const cookieparser=require('cookie-parser')
 const cors=require('cors')
 const path=require('path')
+const cookieSession = require('cookie-session');
 require('dotenv').config()
 const userRoutes=require('./routes/userroutes')
 const authRoutes=require('./routes/authroutes')
@@ -17,11 +18,16 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieparser())
 app.use(express.static(__dirname +'/assets'));
-
+app.use(cookieSession(
+  {
+    keys:"openforum"
+  }
+))
 app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'SECRET' 
+
 }));
 app.use(passport.initialize());
 app.use(passport.session());

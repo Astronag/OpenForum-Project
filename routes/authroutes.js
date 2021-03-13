@@ -40,10 +40,14 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
 })
 
 router.get('/logout', (req, res) =>{ 
-    var v=res.json(req.user)
-    logout()
-    res.status(200).send(v)}
-    );
+    req.session.destroy((err) => {
+        if(err) return next(err)
+    
+        req.logout()
+    
+        res.sendStatus(200)
+    })
+});
 
 router.route("/auth/signin").post(authCtrl.signin);
 router.route("/auth/signout").get(authCtrl.signout);

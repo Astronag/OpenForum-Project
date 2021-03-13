@@ -17,7 +17,11 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieparser())
 app.use(express.static(__dirname +'/assets'));
 
-
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET' 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -13,9 +13,9 @@ var userProfile;
 
 
 router.get('/logout', (req, res) =>{ 
-    var v=req.user
+    var v=res.json(req.user)
     logout()
-    res.status(200).send("logged out"+v)}
+    res.status(200).send(v)}
     );
 router.get('/error', (req, res) => res.send("error logging in"));
 

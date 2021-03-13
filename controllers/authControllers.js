@@ -71,7 +71,11 @@ const hasAuthorization = (req, res, next) => {
 };
 
 const logout=(req,res)=>{
-  req.logout()
+  
+  
+  try{req.logout()}catch(err){
+    res.status(400).json(err)
+  }
   res.status(200).json("logged out")
 }
 

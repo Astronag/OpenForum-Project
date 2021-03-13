@@ -40,8 +40,12 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     res.redirect('/success');
 })
 
-router.route("/logout").get(authCtrl.logout)
+router.route("/logout").get((req,res)=>{
+req.logout()
+res.json("logged out")
+})
 router.route("/auth/signin").post(authCtrl.signin);
 router.route("/auth/signout").get(authCtrl.signout);
+
 
 module.exports = router;

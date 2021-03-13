@@ -70,19 +70,11 @@ const hasAuthorization = (req, res, next) => {
   next();
 };
 
-const logout=(req,res)=>{
-  
-  
-  try{req.logout()}catch(err){
-    res.status(400).json(err)
-  }
-  res.status(200).json("logged out")
-}
 
 module.exports={
   signin,
   signout,
   requireSignin,
   hasAuthorization,
-  logout
+
 };

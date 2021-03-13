@@ -10,23 +10,9 @@ var userProfile;
 
 
 
-router.get('/success', async(req, res) => {res.send(userProfile)
+router.get('/success', async(req, res) => res.send(userProfile)
 
-    
-const user=new User(userProfile)
-
-try {
-    await user.save();
-      return res.status(200).json({
-        message: "Successfully signed up!",
-      });
-    } catch (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
-
-});
+    );
 router.get('/error', (req, res) => res.send("error logging in"));
 
 passport.serializeUser(function(user, cb) {
@@ -50,7 +36,7 @@ router.get('/auth/google',
   passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
-    console.log(res.json())
+    
     res.redirect('/success');
 })
 router.route("/auth/signin").post(authCtrl.signin);

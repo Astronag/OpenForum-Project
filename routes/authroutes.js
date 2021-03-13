@@ -39,7 +39,7 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     
 })
 
-router.get('/logout', (req, res) =>{ 
+router.get('/logout',passport.authenticate('google', { scope : ['profile', 'email'] }), (req, res) =>{ 
     req.session.destroy((err) => {
         if(err) return next(err)
     

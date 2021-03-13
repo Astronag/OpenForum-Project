@@ -39,7 +39,7 @@ router.get('/auth/google',
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
     res.json(req.user)
-    res.redirect('/success');
+    
 })
 
 

@@ -31,11 +31,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.get('/logout',(req,res)=>{
-
-  res.clearCookie('connect.sid');
-  res.json('signed out')
-})
 
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
     console.log('connected to db')

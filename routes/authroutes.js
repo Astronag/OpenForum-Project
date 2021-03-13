@@ -12,8 +12,10 @@ var userProfile;
 
 
 
-router.get('/success', async(req, res) => res.status(200).send(userProfile)
-
+router.get('/logout', (req, res) =>{ 
+    req.logout()
+    req.session.destroy()
+    res.status(200).send("logged out")}
     );
 router.get('/error', (req, res) => res.send("error logging in"));
 

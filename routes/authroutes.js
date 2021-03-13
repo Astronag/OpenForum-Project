@@ -13,7 +13,7 @@ var userProfile;
 
 
 router.get('/logout', (req, res) =>{ 
-    var v=req.isAuthenticated()
+    var v=req.user
     logout()
     res.status(200).send("logged out"+v)}
     );

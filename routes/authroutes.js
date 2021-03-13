@@ -38,7 +38,7 @@ router.get('/auth/google',
   passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
-    
+    res.json(req.user)
     res.redirect('/success');
 })
 

@@ -43,7 +43,7 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
 
 router.route("/logout").get(async(req,res)=>{
 await req.logout()
-req.user=null
+req.session.destroy()
 res.json("logged out")
 })
 router.route("/auth/signin").post(authCtrl.signin);

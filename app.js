@@ -9,12 +9,16 @@ const path=require('path')
 const userRoutes=require('./routes/userroutes')
 const authRoutes=require('./routes/authroutes')
 const postRoutes=require('./routes/postroutes')
+const passport=require('passport')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieparser())
 app.use(express.static(__dirname +'/assets'));
 
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{

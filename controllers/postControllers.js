@@ -228,7 +228,7 @@ const updateScore = (userId, points) => {
 };
 
 const trendingposts=(req,res)=>{
-  Post.aggregate([{$project:{Value1:likes, Value2:comments.length, orderBySumValue:{$add: ["$Value1", "$Value2"]}}},
+  Post.aggregate([{$project:{Value1:1, Value2:1, orderBySumValue:{$add: ["$likes", comments.length]}}},
 {$sort:{orderBySumValue:-1}}]).exec((err,result)=>{
   if (err) {
     return res.status(400).json({

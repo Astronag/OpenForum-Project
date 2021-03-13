@@ -12,22 +12,7 @@ var userProfile;
 
 router.get('/success', (req, res) => {res.send(userProfile)
 
-    const userdetails={
-    name=userProfile.displayName,
-    email=userProfile.emails[0].value
-}
-const user=new User(userdetails)
-
-try {
-    await user.save();
-      return res.status(200).json({
-        message: "Successfully signed up!",
-      });
-    } catch (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
+console.log(userProfile)
 
 });
 router.get('/error', (req, res) => res.send("error logging in"));

@@ -42,7 +42,7 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     res.redirect('/success');
 })
 
-router.route("/logout").get(logout())
+router.route("/logout").get(res.clearCookie('connect.sid'))
 router.route("/auth/signin").post(authCtrl.signin);
 router.route("/auth/signout").get(authCtrl.signout);
 

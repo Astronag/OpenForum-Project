@@ -45,7 +45,7 @@ router.get('/logout',passport.authenticate('google', { scope : ['profile', 'emai
     
         req.logout()
     
-        res.sendStatus(200)
+        res.sendStatus(200).json("logged out")
     })
 });
 

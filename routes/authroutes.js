@@ -12,11 +12,6 @@ var userProfile;
 
 
 
-router.get('/logout', (req, res) =>{ 
-    var v=res.json(req.user)
-    logout()
-    res.status(200).send(v)}
-    );
 router.get('/error', (req, res) => res.send("error logging in"));
 
 passport.serializeUser(function(user, cb) {
@@ -44,6 +39,11 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     
 })
 
+router.get('/logout', (req, res) =>{ 
+    var v=res.json(req.user)
+    logout()
+    res.status(200).send(v)}
+    );
 
 router.route("/auth/signin").post(authCtrl.signin);
 router.route("/auth/signout").get(authCtrl.signout);

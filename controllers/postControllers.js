@@ -31,16 +31,7 @@ const create = (req, res, next) => {
           error: err,
         });
       }
-      User.findOneAndUpdate(
-        { _id: req.profile._id },
-        { $inc: { score : 2 } }
-      ).exec((err, result) => {
-        if(err){
-          return res.status(400).json({
-            error: err
-          });
-        }
-      });
+      updateScore(req.profile._id, 2);
       res.json(result);
     });
   });
@@ -178,6 +169,7 @@ const commentincomment=(req,res)=>{
           error: err,
         });
       }
+      updateScore(req.body.userId, 1);
       res.json(result);
     });
   
@@ -204,6 +196,7 @@ const comment = (req, res) => {
           error: err,
         });
       }
+      updateScore(req.body.userId, 1);
       res.json(result);
     });
 };
@@ -234,6 +227,17 @@ const isPoster = (req, res, next) => {
     });
   }
   next();
+};
+
+const updateScore = (userId, points) => {
+  User.findOneAndUpdate(
+    { _id: userId },
+    { $inc: { score : points } }
+  ).exec((err, result) => {
+    if(err){
+      return err;
+    }
+  });
 };
 
 module.exports = {

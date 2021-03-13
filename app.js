@@ -33,7 +33,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.get('/logout',(req,res)=>{
   req.logout()
-  res.json("signed out")
+  
+  res.json(req.user)
 })
 
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{

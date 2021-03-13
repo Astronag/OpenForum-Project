@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 const fs = require("fs");
 const formidable = require("formidable");
 
@@ -23,6 +24,16 @@ const create = (req, res, next) => {
           error: err,
         });
       }
+      User.findOneAndUpdate(
+        { _id: req.profile._id },
+        { $inc: { score : 2 } }
+      ).exec((err, result) => {
+        if(err){
+          return res.status(400).json({
+            error: err
+          });
+        }
+      });
       res.json(result);
     });
   });

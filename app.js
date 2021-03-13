@@ -20,7 +20,7 @@ app.use(express.static(__dirname +'/assets'));
 
 app.use(session({
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   secret: 'SECRET' 
 }));
 app.use(passport.initialize());

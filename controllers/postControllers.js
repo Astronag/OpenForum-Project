@@ -227,17 +227,47 @@ const updateScore = (userId, points) => {
   );
 };
 
-const trendingposts=(req,res)=>{
-  Post.aggregate([{$project:{Value1:1, Value2:1, orderBySumValue:{$add: ["$likes", comments.length]}}},
-{$sort:{orderBySumValue:-1}}]).exec((err,result)=>{
-  if (err) {
-    return res.status(400).json({
-      error: err,
+const trendingposts = (req, res) => {
+  Post.find({}, function (err, docs) {
+    docs.forEach(function (data) {
+      var id=data.id
+      var likes = data.likes.length;
+    
+    
+      var comments = data.comments.length;
+      console.log(comments);
+      const date2 = new Date();
+      const diffTime = Math.abs(date2 - data.created);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      console.log(diffDays);
+      const updated = Post.findByIdAndUpdate(
+        id,
+        {score: (likes+comments)/diffDays },
+        function (errr, doc) {
+          if (errr) {
+            console.log(err);
+          } else {
+            console.log("Updated User : ", doc);
+          }
+        }
+      );
+      var mysort = { score: -1 };
+      Post.find().sort(mysort).exec((err,result)=>{
+        if (err) throw err;
+        else
+           res.json(result)
+      })
+    
     });
-  }
-  res.json(result);
-})
-}
+  }).exec((err, posts) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+  
+  });
+};
 
 module.exports = {
   listByUser,

@@ -42,9 +42,8 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
 })
 
 router.route("/logout").get((req,res)=>{
-req.logOut()
+req.logout()
 req.user=null
-delete req.session
 res.json("logged out")
 })
 router.route("/auth/signin").post(authCtrl.signin);

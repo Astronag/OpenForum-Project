@@ -2,13 +2,8 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const fs = require("fs");
 const formidable = require("formidable");
-const session = require('express-session');
-const passport = require('passport');
-
-
-
-
-
+const session = require("express-session");
+const passport = require("passport");
 
 const create = (req, res, next) => {
   let form = new formidable.IncomingForm();
@@ -132,17 +127,13 @@ const unlike = (req, res) => {
 };
 
 const likeacomment = (req, res) => {
-  
-
   Post.findOneAndUpdate(
-   {
+    {
       _id: req.body.postId,
-      "comments.text":req.body.comment,
+      "comments.text": req.body.comment,
       "comments.postedBy": req.body.postedBy,
-      
     },
-    { $inc: { "comments.$.likes" : 1 } },
-  
+    { $inc: { "comments.$.likes": 1 } }
   ).exec((err, result) => {
     if (err) {
       return res.status(400).json({
@@ -153,34 +144,31 @@ const likeacomment = (req, res) => {
   });
 };
 
-const commentincomment=(req,res)=>{
-  
-  var changes={
-    text:req.body.comtext,
-    postedBy:req.body.userId
-  }
+const commentincomment = (req, res) => {
+  var changes = {
+    text: req.body.comtext,
+    postedBy: req.body.userId,
+  };
   Post.findOneAndUpdate(
-    {_id:req.body.postId,
-    "comments.text":req.body.comment,
-    },
-    {$push:{"comments.$.incomments":changes}},{ new: true }).exec((err, result) => {
-      if (err) {
-        return res.status(400).json({
-          error: err,
-        });
-      }
-      updateScore(req.body.userId, 1);
-      res.json(result);
-    });
-  
-}
+    { _id: req.body.postId, "comments.text": req.body.comment },
+    { $push: { "comments.$.incomments": changes } },
+    { new: true }
+  ).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+    updateScore(req.body.userId, 1);
+    res.json(result);
+  });
+};
 
 const comment = (req, res) => {
   var commentf = {
     text: req.body.comment,
     postedBy: req.body.userId,
     likes: 0,
-  
   };
 
   Post.findByIdAndUpdate(
@@ -230,15 +218,26 @@ const isPoster = (req, res, next) => {
 };
 
 const updateScore = (userId, points) => {
-  User.findOneAndUpdate(
-    { _id: userId },
-    { $inc: { score : points } }
-  ).exec((err, result) => {
-    if(err){
-      return err;
+  User.findOneAndUpdate({ _id: userId }, { $inc: { score: points } }).exec(
+    (err, result) => {
+      if (err) {
+        return err;
+      }
     }
-  });
+  );
 };
+
+const trendingposts=(req,res)=>{
+  Post.aggregate([{$project:{Value1:likes, Value2:comments.length, orderBySumValue:{$add: ["$Value1", "$Value2"]}}},
+{$sort:{orderBySumValue:-1}}]).exec((err,result)=>{
+  if (err) {
+    return res.status(400).json({
+      error: err,
+    });
+  }
+  res.json(result);
+})
+}
 
 module.exports = {
   listByUser,
@@ -253,5 +252,6 @@ module.exports = {
   uncomment,
   isPoster,
   likeacomment,
-  commentincomment
+  commentincomment,
+  trendingposts
 };

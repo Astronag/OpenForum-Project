@@ -37,6 +37,8 @@ router.route("/api/post/likeacomment").put(postCtrl.likeacomment)
 
 router.route("/api/post/commentincomment").put(postCtrl.commentincomment)
 
+router.route("/trendingposts").get(postCtrl.trendingposts)
+
 router.param("userId", userCtrl.userByID);
 router.param("postId", postCtrl.postByID);
 

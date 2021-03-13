@@ -23,6 +23,11 @@ const UserSchema = new mongoose.Schema({
     required:true,
     default:0
   },
+  badge: {
+    type: String,
+    required: true,
+    default: 'Level 1 (Contributor)'
+  },
   created: {
     type: Date,
     default: Date.now,

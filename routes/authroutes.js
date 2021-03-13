@@ -36,13 +36,13 @@ router.get('/auth/google',
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
     req.session.user=userProfile
-    res.json(userProfile)
+    res.send(req.session.user)
     
 })
 
 router.get('/logout',passport.authenticate('google', { scope : ['profile', 'email'] }), (req, res) =>{ 
-   req.session.user=null
-   res.json(req.session.user)
+   req.session.destroy()
+
 });
 
 router.route("/auth/signin").post(authCtrl.signin);

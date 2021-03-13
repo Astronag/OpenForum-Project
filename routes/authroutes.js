@@ -12,11 +12,8 @@ var userProfile;
 
 router.get('/success', async(req, res) => {res.send(userProfile)
 
-    const userdetails={
-    "name":req.user.displayName,
-    "email":req.user.emails[0].value
-}
-const user=new User(userdetails)
+    
+const user=new User(userProfile)
 
 try {
     await user.save();

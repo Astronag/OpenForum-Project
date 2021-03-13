@@ -35,18 +35,13 @@ router.get('/auth/google',
   passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
-    res.json(req.user)
+    req.session.user=userProfile
+    res.json(userProfile)
     
 })
 
 router.get('/logout',passport.authenticate('google', { scope : ['profile', 'email'] }), (req, res) =>{ 
-    req.session.destroy((err) => {
-        if(err) return next(err)
-    
-        req.logout()
-    
-        res.sendStatus(200).json("logged out")
-    })
+   res.json(req.session.user)
 });
 
 router.route("/auth/signin").post(authCtrl.signin);

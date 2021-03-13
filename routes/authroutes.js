@@ -22,7 +22,7 @@ passport.deserializeUser(function(obj, cb) {
 passport.use(new GoogleStrategy({
     clientID: config.clientid,
     clientSecret: config.clientsecret,
-    callbackURL: "https://openforumsocial.herokuapp.com/auth/google/callback"
+    callbackURL: "/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;

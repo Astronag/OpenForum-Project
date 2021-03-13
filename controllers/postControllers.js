@@ -171,6 +171,7 @@ const commentincomment=(req,res)=>{
           error: err,
         });
       }
+      updateScore(req.body.userId);
       res.json(result);
     });
   
@@ -197,6 +198,7 @@ const comment = (req, res) => {
           error: err,
         });
       }
+      updateScore(req.body.userId);
       res.json(result);
     });
 };
@@ -227,6 +229,19 @@ const isPoster = (req, res, next) => {
     });
   }
   next();
+};
+
+const updateScore = (userId) => {
+  User.findOneAndUpdate(
+    { _id: userId },
+    { $inc: { score : 1 } }
+  ).exec((err, result) => {
+    if(err){
+      return res.status(400).json({
+        error: err
+      });
+    }
+  });
 };
 
 module.exports = {

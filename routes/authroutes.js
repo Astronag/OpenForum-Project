@@ -6,10 +6,10 @@ const router = express.Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const config=require('../config')
 const User = require("../models/user");
-var logout = require('express-passport-logout');
+const logout = require('express-passport-logout');
+const session = require('express-session');
 
 var userProfile;
-
 
 
 router.get('/error', (req, res) => res.send("error logging in"));
@@ -24,7 +24,7 @@ passport.deserializeUser(function(obj, cb) {
 passport.use(new GoogleStrategy({
     clientID: "789965715216-2sbi4nk44kbaabtsqt7vlddgklieksq9.apps.googleusercontent.com",
     clientSecret: "Jtdl2O8dBSJnTUrJ9I6UEBhf",
-    callbackURL: "https://openforumsocial.herokuapp.com/auth/google/callback"
+    callbackURL: "http://localhost:80/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -35,12 +35,16 @@ router.get('/auth/google',
   passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
-    req.session.user=userProfile
-    res.send(req.session.user)
     
-})
+    res.json(userProfile)
+  
+    
+}
 
-router.get('/logout',passport.authenticate('google', { scope : ['profile', 'email'] }), (req, res) =>{ 
+)
+
+router.get('/logout', (req, res) =>{ 
+   console.log(req.session.user)
    req.logout()
    res.send("logged out")
 

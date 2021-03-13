@@ -18,20 +18,17 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieparser())
 app.use(express.static(__dirname +'/assets'));
-app.use(cookieSession(
-  {
-    keys:"openforum"
-  }
-))
-app.use(session({
-  resave: false,
-  saveUninitialized: false,
-  secret: 'SECRET' 
 
-}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
     console.log('connected to db')
 })

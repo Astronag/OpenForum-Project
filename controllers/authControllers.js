@@ -3,6 +3,10 @@ const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const config = require("../config");
 
+
+
+
+
 const signin = async (req, res) => {
   try {
     let user = await User.findOne({
@@ -66,9 +70,15 @@ const hasAuthorization = (req, res, next) => {
   next();
 };
 
+const logout=(req,res)=>{
+  req.logout()
+  res.status(200).json("logged out")
+}
+
 module.exports={
   signin,
   signout,
   requireSignin,
   hasAuthorization,
+  logout
 };

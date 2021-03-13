@@ -10,7 +10,7 @@ var userProfile;
 
 
 
-router.get('/success', async(req, res) => res.send(userProfile)
+router.get('/success', async(req, res) => res.status(200).send(userProfile)
 
     );
 router.get('/error', (req, res) => res.send("error logging in"));
@@ -39,6 +39,8 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     
     res.redirect('/success');
 })
+
+router.route("/logout").get(authCtrl.logout)
 router.route("/auth/signin").post(authCtrl.signin);
 router.route("/auth/signout").get(authCtrl.signout);
 

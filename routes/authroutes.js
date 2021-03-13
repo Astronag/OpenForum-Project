@@ -12,7 +12,7 @@ var userProfile;
 
 
 
-router.get('/success', async(req, res) => res.status(200).send(req.user)
+router.get('/success', async(req, res) => res.status(200).send(userProfile)
 
     );
 router.get('/error', (req, res) => res.send("error logging in"));

@@ -13,6 +13,7 @@ const authRoutes=require('./routes/authroutes')
 const postRoutes=require('./routes/postroutes')
 const passport=require('passport')
 const session = require('express-session');
+const MongoStore = require('connect-mongo')
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -23,12 +24,14 @@ app.use(express.static(__dirname +'/assets'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true,
-  cookie: { secure: true }
-}))
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: config.mongoUri }),
+  })
+)
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
     console.log('connected to db')
 })

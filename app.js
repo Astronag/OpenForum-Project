@@ -26,7 +26,7 @@ app.use(passport.session());
 
 app.use(
   session({
-    secret: 'keyboard cat',
+    secret: 'keyboard',
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: config.mongoUri }),

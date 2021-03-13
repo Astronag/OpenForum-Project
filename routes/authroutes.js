@@ -6,6 +6,7 @@ const router = express.Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const config=require('../config')
 const User = require("../models/user");
+const { delete } = require("./postroutes");
 var userProfile;
 
 
@@ -42,6 +43,8 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
 
 router.route("/logout").get((req,res)=>{
 req.logout()
+req.user=null
+delete req.session
 res.json("logged out")
 })
 router.route("/auth/signin").post(authCtrl.signin);

@@ -10,7 +10,7 @@ var userProfile;
 
 
 
-router.get('/success', (req, res) => {res.send(userProfile)
+router.get('/success', async(req, res) => {res.send(userProfile)
 
     const userdetails={
     "name":req.user.displayName,

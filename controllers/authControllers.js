@@ -58,10 +58,7 @@ const requireSignin = expressJwt({
   secret: config.jwtSecret,
   userProperty: "auth",
   algorithms:['sha1', 'RS256', 'HS256']
-})(req,res,err=>{
-  if(req.session.user)
-    next()
-})
+})||req.session.user
 
 const hasAuthorization = (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;

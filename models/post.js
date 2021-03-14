@@ -5,7 +5,10 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: "Name is required",
   },
-
+  title: {
+    type: String,
+    required: "Title is required"
+  },
   photo: {
     data: Buffer,
     contentType: String,

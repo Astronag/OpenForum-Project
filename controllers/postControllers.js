@@ -268,7 +268,7 @@ const trendingposts = (req, res) => {
         error: err,
       });
     }
-    res.json(posts)
+  
 
   });
 };

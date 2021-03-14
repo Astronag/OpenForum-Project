@@ -36,7 +36,7 @@ router.get('/auth/google',
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
     
-    req.session.user=userProfile
+    req.session.id=userProfile.id
     res.json(userProfile)
   
     

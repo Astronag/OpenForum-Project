@@ -21,7 +21,10 @@ const create = (req, res, next) => {
     if (files.photo) {
       post.photo.data = fs.readFileSync(files.photo.path);
       post.photo.contentType = files.photo.type;
+      post.hasphoto=true
     }
+    else
+      post.hasphoto=false
     post.save((err, result) => {
       if (err) {
         return res.status(400).json({

@@ -58,8 +58,12 @@ const requireSignin = (req, res, next) => {
       algorithms: ["sha1", "RS256", "HS256"],
     }) ||
     req.session.user._id==req.body.id
-  )
-    next();
+  ){
+    next();}
+  else{
+  return res.status("403").json({
+    error: "User is not authorized",
+  });}
 };
 
 const hasAuthorization = (req, res, next) => {

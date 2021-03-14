@@ -255,8 +255,8 @@ const trendingposts = (req, res) => {
       );
       console.log(updated)
       var mysort = { score: -1 };
-      Post.find().sort(mysort).exec((err,result)=>{
-        if (err) throw err;
+      Post.find().sort(mysort).exec((er,result)=>{
+        if (err) throw er;
         else
            res.json(result)
       })
@@ -264,11 +264,9 @@ const trendingposts = (req, res) => {
     });
   }).exec((err, posts) => {
     if (err) {
-      return res.status(400).json({
-        error: err,
-      });
+      return res.status(400).json("Error");
     }
-  
+   res.status(200).json(posts)
 
   });
 };

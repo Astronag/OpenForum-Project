@@ -35,8 +35,9 @@ router.get('/auth/google',
   passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
-    
+  
     req.session.user=userProfile
+    console.log(req.session.user)
     res.json(userProfile)
   
     
@@ -49,6 +50,8 @@ router.get('/logout', (req, res) =>{
    res.send("logged out")
 
 });
+
+
 
 router.route("/auth/signin").post(authCtrl.signin);
 router.route("/auth/signout").get(authCtrl.signout);

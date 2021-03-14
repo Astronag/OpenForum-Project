@@ -30,6 +30,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: config.mongoUri }),
+  
   })
 )
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{

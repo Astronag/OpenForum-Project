@@ -57,7 +57,7 @@ const requireSignin = (req, res, next) => {
       userProperty: "auth",
       algorithms: ["sha1", "RS256", "HS256"],
     }) ||
-    req.session.user._id==req.body.id
+    req.session.user.id==req.body.id
   ){
     next();}
   else{

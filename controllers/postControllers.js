@@ -257,8 +257,7 @@ const trendingposts = (req, res) => {
       var mysort = { score: -1 };
       Post.find().sort(mysort).exec((er,result)=>{
         if (err) throw er;
-        else
-           res.json(result)
+        
       })
     
     });

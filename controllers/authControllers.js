@@ -50,16 +50,18 @@ const signout = (req, res) => {
   });
 };
 
+
+
 const requireSignin = (req, res, next) => {
-  if (
-    expressJwt({
-      secret: config.jwtSecret,
-      userProperty: "auth",
-      algorithms: ["sha1", "RS256", "HS256"],
-    }) ||
-    req.session.user.id==req.body.id
-  ){
-    next();}
+  
+  const ra= expressJwt({
+    secret: config.jwtSecret,
+    userProperty: "auth",
+    algorithms: ["sha1", "RS256", "HS256"],
+  }) 
+  if (ra||req.session.user){
+    next();
+  }
   else{
   return res.status("403").json({
     error: "User is not authorized",

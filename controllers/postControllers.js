@@ -266,8 +266,8 @@ const trendingposts = (req, res) => {
         error: err,
       });
     }
-    res.json(posts)
-  
+    var result=JSON.parse(res.json())
+    return res.redirect("/api/users/"+result["postedBy"])
   });
 };
 

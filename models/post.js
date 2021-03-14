@@ -13,6 +13,7 @@ const PostSchema = new mongoose.Schema({
     data: Buffer,
     contentType: String,
   },
+  hasphoto:Boolean,
   likes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
   score:Number,
   username:String,

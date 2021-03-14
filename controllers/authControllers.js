@@ -56,6 +56,7 @@ const requireSignin = (req,res)=>{
   jwt.verify(req.headers.authorization,config.jwtSecret,function(err,decode){
     if(err)
     {
+      console.log(req.session.user)
       if(req.session.user)
         next()
       else {

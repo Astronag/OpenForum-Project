@@ -52,11 +52,21 @@ const signout = (req, res) => {
 
 
 
-const requireSignin = expressJwt({
-  secret: config.jwtSecret,
-  userProperty: "auth",
-  algorithms: ["sha1", "RS256", "HS256"],
-}) 
+const requireSignin = (req,res)=>{
+  jwt.verify(req.headers.authorization,config.jwtSecret,function(err,decode){
+    if(err)
+    {
+      if(req.session.user)
+        next()
+      else {
+      return res.status("401").json({
+        error: "Could not sign in",
+      });}
+        
+    }
+    next()
+  })
+}
 
 const hasAuthorization = (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;

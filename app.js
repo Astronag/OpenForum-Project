@@ -18,7 +18,8 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieparser())
-app.use(express.static(__dirname +'/assets'));
+const CURRENT_WORKING_DIR = process.cwd()
+app.use(express.static(path.join(CURRENT_WORKING_DIR, "/assets")))
 
 
 app.use(passport.initialize());

@@ -15,6 +15,7 @@ const PostSchema = new mongoose.Schema({
   },
   likes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
   score:Number,
+  username:String,
   comments: [
     {
       text: String,

@@ -32,7 +32,7 @@ passport.use(new GoogleStrategy({
   }
 ));
 router.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile', 'email'] }));
+  passport.authenticate('google', { scope : ['profile'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
   

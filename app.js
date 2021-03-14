@@ -24,6 +24,7 @@ app.use(express.static(__dirname +'/assets'));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(
   session({
     secret: 'keyboard',

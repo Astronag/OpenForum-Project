@@ -283,6 +283,8 @@ const updateScore = (userId, points) => {
 
 const trendingposts = (req, res) => {
   Post.find({}, function (err, docs) {
+    if(docs.length==0)
+       res.send("No posts")
     docs.forEach(function (data) {
       var id=data.id
       var likes = data.likes.length;
@@ -308,7 +310,7 @@ const trendingposts = (req, res) => {
       console.log(updated)
       var mysort = { score: -1 };
       Post.find({}).populate('postedBy').populate('comments.postedBy').populate('comments.incomments.postedBy').populate("comments.likes").sort(mysort).exec((er,result)=>{
-        if (err) throw er;
+        if (err) throw err
         console.log(result)
         res.json(result)
       })

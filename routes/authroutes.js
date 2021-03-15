@@ -36,13 +36,13 @@ passport.use(new GoogleStrategy({
 router.get('/auth/google', 
   passport.authenticate('google', { scope : ['profile','email'] }));
  
-router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
+router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),async function(req,res){
   
     req.session.user=userProfile
     console.log(req.session.user)
     
     console.log(userProfile["id"])
-    let usertofind =  User.findOne({
+    let usertofind = await User.findOne({
       email: userProfile["emails"][0]['value'],
     });
     if(!usertofind)

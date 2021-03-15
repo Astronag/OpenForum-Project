@@ -19,7 +19,13 @@ const UserSchema = new mongoose.Schema({
   },
   salt: String,
   updated: Date,
-  score: {type:Number,
+  role:{
+    type:String,
+    required:true,
+    default:'Restricted'
+  },
+  score:{
+    type:Number,
     required:true,
     default:0
   },

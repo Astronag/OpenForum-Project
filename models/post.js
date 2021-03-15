@@ -23,12 +23,12 @@ const PostSchema = new mongoose.Schema({
       created: { type: Date, default: Date.now },
       postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },
       likes: Number,
-      name:String,
+    
       incomments: [
         {
           text: String,
           postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },
-          name:String
+        
         },
       ],
     },

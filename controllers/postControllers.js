@@ -268,9 +268,9 @@ const trendingposts = (req, res) => {
       );
       console.log(updated)
       var mysort = { score: -1 };
-      Post.find().sort(mysort).exec((er,result)=>{
+      Post.find().populate('comments.postedBy').populate('comments.incomments.postedBy').sort(mysort).exec((er,result)=>{
         if (err) throw er;
-        
+        res.json(result)
       })
     
     });
@@ -279,7 +279,7 @@ const trendingposts = (req, res) => {
       return res.status(400).json("Error");
     }
    
-   res.status(200).json(posts)
+   
 
   });
 };

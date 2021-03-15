@@ -34,8 +34,10 @@ router
   .delete(authCtrl.requireSignin, postCtrl.isPoster, postCtrl.remove);
 
 router.route("/api/post/likeacomment").put(postCtrl.likeacomment)
+router.route("/api/post/unlikeacomment").put(postCtrl.unlikeacomment)
 
 router.route("/api/post/commentincomment").put(postCtrl.commentincomment)
+router.route("/api/post/uncommentincomment").put(postCtrl.uncommentincomment)
 
 router.route("/trendingposts").get(postCtrl.trendingposts)
 

@@ -39,7 +39,7 @@ const create = (req, res, next) => {
 
 const postByID = (req, res, next, id) => {
   Post.findById(id)
-    .populate("postedBy", "_id name")
+    .populate("postedBy", "_id name").populate("likes").populate("comments.likes").populate("comments.incomments.postedBy")
     .exec((err, post) => {
       if (err || !post)
         return res.status("400").json({
@@ -53,7 +53,7 @@ const postByID = (req, res, next, id) => {
 const listByUser = (req, res) => {
   Post.find({ postedBy: req.profile._id })
     .populate("comments", "text created")
-    .populate("comments.postedBy", "_id name")
+    .populate("comments.postedBy", "_id name").populate("comments.likes").populate("comments.incomments.postedBy").populate("likes")
     .populate("postedBy", "_id name")
     .sort("-created")
     .exec((err, posts) => {
@@ -70,8 +70,8 @@ const listNewsFeed = (req, res) => {
   let following = req.profile.following;
   following.push(req.profile._id);
   Post.find({ postedBy: { $in: req.profile.following } })
-    .populate("comments", "text created")
-    .populate("comments.postedBy", "_id name")
+    .populate("comments", "text created").populate("likes")
+    .populate("comments.postedBy", "_id name").populate("comments.likes").populate("comments.incomments.postedBy")
     .populate("postedBy", "_id name")
     .sort("-created")
     .exec((err, posts) => {
@@ -132,13 +132,14 @@ const unlike = (req, res) => {
 };
 
 const likeacomment = (req, res) => {
+  
   Post.findOneAndUpdate(
     {
       _id: req.body.postId,
       "comments.text": req.body.comment,
       "comments.postedBy": req.body.postedBy,
     },
-    { $inc: { "comments.$.likes": 1 } }
+    { $push: { "comments.$.likes": req.body.userId } }
   ).exec((err, result) => {
     if (err) {
       return res.status(400).json({
@@ -149,15 +150,53 @@ const likeacomment = (req, res) => {
   });
 };
 
+const unlikeacomment=(req,res)=>{
+  Post.findOneAndUpdate(
+    {
+      _id: req.body.postId,
+      "comments.text": req.body.comment,
+      "comments.postedBy": req.body.postedBy,
+    },
+    { $pull: { "comments.$.likes": req.body.userId } }
+  ).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+    res.json(result);
+  });
+}
+
 const commentincomment = (req, res) => {
   var changes = {
     text: req.body.comtext,
     postedBy: req.body.userId,
-    name:req.body.name
+    
   };
   Post.findOneAndUpdate(
     { _id: req.body.postId, "comments.text": req.body.comment },
     { $push: { "comments.$.incomments": changes } },
+    { new: true }
+  ).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+    updateScore(req.body.userId, 1);
+    res.json(result);
+  });
+};
+const uncommentincomment = (req, res) => {
+  var changes = {
+    text: req.body.comtext,
+    postedBy: req.body.userId,
+    
+  };
+  Post.findOneAndUpdate(
+    { _id: req.body.postId, "comments.text": req.body.comment },
+    { $pull: { "comments.$.incomments": changes } },
     { new: true }
   ).exec((err, result) => {
     if (err) {
@@ -175,7 +214,7 @@ const comment = (req, res) => {
     text: req.body.comment,
     postedBy: req.body.userId,
     likes: 0,
-    name:req.body.name
+    
   };
 
   Post.findByIdAndUpdate(
@@ -268,7 +307,7 @@ const trendingposts = (req, res) => {
       );
       console.log(updated)
       var mysort = { score: -1 };
-      Post.find().populate('comments.postedBy').populate('comments.incomments.postedBy').sort(mysort).exec((er,result)=>{
+      Post.find({}).populate('postedBy').populate('comments.postedBy').populate('comments.incomments.postedBy').populate("comments.likes").sort(mysort).exec((er,result)=>{
         if (err) throw er;
         res.json(result)
       })
@@ -298,5 +337,7 @@ module.exports = {
   isPoster,
   likeacomment,
   commentincomment,
-  trendingposts
+  trendingposts,
+  unlikeacomment,
+  uncommentincomment
 };

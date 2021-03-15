@@ -16,7 +16,7 @@ const leaderboard = (req, res) => {
       console.log(diffDays);
       const updated = User.findByIdAndUpdate(
         userid,
-        {score: (likes+comments)/diffDays },
+        {score: (likes*comments)/diffDays },
         function (errr, doc) {
           if (errr) {
             console.log(err);
@@ -27,8 +27,7 @@ const leaderboard = (req, res) => {
       );
       var mysort = { score: -1 };
       User.find().sort(mysort).exec((err,result)=>{
-        if (err) res.json({message:"error"});
-        else
+    
            res.json(result)
       })
     

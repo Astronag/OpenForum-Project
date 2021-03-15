@@ -153,6 +153,7 @@ const commentincomment = (req, res) => {
   var changes = {
     text: req.body.comtext,
     postedBy: req.body.userId,
+    name:req.body.name
   };
   Post.findOneAndUpdate(
     { _id: req.body.postId, "comments.text": req.body.comment },
@@ -174,6 +175,7 @@ const comment = (req, res) => {
     text: req.body.comment,
     postedBy: req.body.userId,
     likes: 0,
+    name:req.body.name
   };
 
   Post.findByIdAndUpdate(
@@ -276,6 +278,7 @@ const trendingposts = (req, res) => {
     if (err) {
       return res.status(400).json("Error");
     }
+   
    res.status(200).json(posts)
 
   });

@@ -7,23 +7,30 @@ const PostSchema = new mongoose.Schema({
   },
   title: {
     type: String,
-    required: "Title is required"
+    required: "Title is required",
   },
   photo: {
     data: Buffer,
     contentType: String,
   },
-  hasphoto:Boolean,
+  hasphoto: Boolean,
   likes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
-  score:Number,
-  username:String,
+  score: Number,
+  username: String,
   comments: [
     {
       text: String,
       created: { type: Date, default: Date.now },
       postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },
       likes: Number,
-      incomments:[{text:String,postedBy:{ type: mongoose.Schema.ObjectId, ref: "User" }}]
+      name:String,
+      incomments: [
+        {
+          text: String,
+          postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },
+          name:String
+        },
+      ],
     },
   ],
   postedBy: { type: mongoose.Schema.ObjectId, ref: "User" },

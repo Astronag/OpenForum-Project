@@ -41,6 +41,7 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     req.session.user=userProfile
     console.log(req.session.user)
     res.json(userProfile)
+    console.log(userProfile["id"])
     var user={
       id:mongoose.Types.ObjectId(userProfile["id"]),
       name:userProfile["displayName"],

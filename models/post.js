@@ -15,7 +15,11 @@ const PostSchema = new mongoose.Schema({
   },
   hasphoto: Boolean,
   likes: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
-  score: Number,
+  score: {
+    type:Number,
+    default:1,
+    required:true
+  },
   username: String,
   comments: [
     {

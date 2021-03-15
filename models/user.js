@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
   score:{
     type:Number,
     required:true,
-    default:0
+    default:1
   },
   badge: {
     type: String,

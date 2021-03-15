@@ -26,11 +26,11 @@ const UserSchema = new mongoose.Schema({
   },
   Country:{
     type:String,
-    required:true
+    
   },
   dob:{
   type:String,
-  required:true
+  
   },
   role:{
     type:String,

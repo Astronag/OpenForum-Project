@@ -16,7 +16,7 @@ const leaderboard = async (req, res) => {
     
     await User.findByIdAndUpdate(
       userid,
-      { $set: { score: updatedscore } },
+      { $inc: { score: updatedscore } },
       async function (errr, doc) {
         if (errr) {
           console.log(err);

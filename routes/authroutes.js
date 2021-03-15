@@ -50,14 +50,15 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
       password:"Google"
     }
     var userdata= new User(user)
-    try {
-      userdata.save();
-        return res.status(200).json(userProfile);
-      } catch (err) {
-        return res.status(400).json({
-          error: err,
-        });
-      }
+    
+      userdata.save((err,result)=>{
+        if(err)
+          throw err
+        else
+           res.json(result)
+      })
+     
+      
   
     
 }

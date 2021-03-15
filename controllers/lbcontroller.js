@@ -23,23 +23,24 @@ const leaderboard = (req, res) => {
             console.log("Updated User : ", doc);
           }
         }
-      );
+      )}).exec((err, posts) => {
+        if (err) {
+          return res.status(400).json({
+            error: err,
+          });
+        }
+      
+      });
       var mysort = { score: -1 };
       User.find().sort(mysort).exec((errrr,result)=>{
         if (errrr) console.log("error");
         else
            res.json(result)
+        
       })
     
     });
-  }).exec((err, posts) => {
-    if (err) {
-      return res.status(400).json({
-        error: err,
-      });
-    }
   
-  });
 };
 
 module.exports = { leaderboard };

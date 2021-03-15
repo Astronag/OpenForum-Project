@@ -1,4 +1,3 @@
-  
 const Post = require("../models/post");
 const User = require("../models/user");
 
@@ -14,9 +13,9 @@ const leaderboard = (req, res) => {
       const diffTime = Math.abs(date2 - data.created);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       console.log(diffDays);
-      const updated = User.findByIdAndUpdate(
+      User.findByIdAndUpdate(
         userid,
-        {score: (likes*comments)/diffDays },
+        {score: (likes+comments)/diffDays },
         function (errr, doc) {
           if (errr) {
             console.log(err);
@@ -26,15 +25,18 @@ const leaderboard = (req, res) => {
         }
       );
       var mysort = { score: -1 };
-      User.find().sort(mysort).exec((err,result)=>{
-    
+      User.find().sort(mysort).exec((errrr,result)=>{
+        if (errrr) console.log("error");
+        else
            res.json(result)
       })
     
     });
   }).exec((err, posts) => {
     if (err) {
-      console.log("error")
+      return res.status(400).json({
+        error: err,
+      });
     }
   
   });

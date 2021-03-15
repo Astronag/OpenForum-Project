@@ -42,7 +42,7 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     console.log(req.session.user)
     
     console.log(userProfile["id"])
-    let usertofind = await User.findOne({
+    let usertofind =  User.findOne({
       email: userProfile["emails"][0]['value'],
     });
     if(!usertofind)

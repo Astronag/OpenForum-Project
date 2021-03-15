@@ -6,7 +6,7 @@ const leaderboard = (req, res) => {
     docs.forEach(function (data) {
       var userid = data.postedBy;
       var likes = data.likes.length;
-    
+
       var comments = data.comments.length;
       console.log(comments);
       const date2 = new Date();
@@ -15,7 +15,7 @@ const leaderboard = (req, res) => {
       console.log(diffDays);
       User.findByIdAndUpdate(
         userid,
-        {score: (likes+comments)/diffDays },
+        { score: (likes + comments) / diffDays },
         function (errr, doc) {
           if (errr) {
             console.log(err);
@@ -23,24 +23,22 @@ const leaderboard = (req, res) => {
             console.log("Updated User : ", doc);
           }
         }
-      )}).exec((err, posts) => {
-        if (err) {
-          return res.status(400).json({
-            error: err,
-          });
-        }
-      
-      });
-      var mysort = { score: -1 };
-      User.find().sort(mysort).exec((errrr,result)=>{
-        if (errrr) console.log("error");
-        else
-           res.json(result)
-        
-      })
-    
+      );
     });
-  
+  }).exec((err, posts) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    }
+  });
+  var mysort = { score: -1 };
+  User.find()
+    .sort(mysort)
+    .exec((errrr, result) => {
+      if (errrr) console.log("error");
+      else res.json(result);
+    });
 };
 
 module.exports = { leaderboard };

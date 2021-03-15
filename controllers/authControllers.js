@@ -50,16 +50,17 @@ const signout = (req, res) => {
   });
 };
 
-const requireSignin = async(req,res)=>{
+const requireSignin = async(req,res,next)=>{
   
-    var accessToken =req.headers['Authorization'];
+    var accessToken =req.headers.authorization
+    console.log(accessToken)
     accessToken=accessToken.replace(/^Bearer\s+/, "");
-    const { userId, exp } = await jwt.verify(accessToken, config.jwtSecret);
+    console.log(accessToken)
+    const userId = await jwt.verify(accessToken, config.jwtSecret);
     // Check if token has expired
-    if (exp < Date.now().valueOf() / 1000) { 
-     return res.status(401).json({ error: "JWT token has expired, please login to obtain a new one" });
-    } 
+   
     req.user = await User.findById(userId); 
+    
     if(req.user)
       next();
     else 

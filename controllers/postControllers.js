@@ -213,17 +213,21 @@ const uncomment = (req, res) => {
 };
 
 const isPoster = (req, res, next) => {
-  let isPoster = req.post && req.user && req.post.postedBy._id == req.user._id
-  isPoster=req.user.role=="Admin"
+  let isPoster=req.user.id==req.post.postedBy
+  console.log(req.user)
+  let isPosteradmin=req.user.role=="Admin"
   
   
   
-  if (!isPoster) {
-    return res.status("403").json({
-      error: "User is not authorized! login now",
-    });
+  if (isPoster||isPosteradmin) {
+   next()
   }
-  next();
+  else
+  {
+  return res.status("403").json({
+    error: "User is not authorized! login now",
+  });
+}
 };
 
 const updateScore = (userId, points) => {

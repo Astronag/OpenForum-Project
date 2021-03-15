@@ -4,7 +4,9 @@ const passport=require('passport')
 const router = express.Router();
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const config=require('../config')
-
+const Post=require('../models/post')
+const mongoose=require('mongoose')
+const User=require('../models/user')
 
 
 
@@ -32,13 +34,28 @@ passport.use(new GoogleStrategy({
   }
 ));
 router.get('/auth/google', 
-  passport.authenticate('google', { scope : ['profile'] }));
+  passport.authenticate('google', { scope : ['profile','email'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),function(req,res){
   
     req.session.user=userProfile
     console.log(req.session.user)
     res.json(userProfile)
+    var user={
+      id:mongoose.Types.ObjectId(userProfile["id"]),
+      name:userProfile["displayName"],
+      signintype:"Google",
+      email:userProfile["emails"][0]['value']
+    }
+    var userdata= new User(user)
+    try {
+      userdata.save();
+        return res.status(200).json(userProfile);
+      } catch (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      }
   
     
 }

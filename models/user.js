@@ -19,6 +19,19 @@ const UserSchema = new mongoose.Schema({
   },
   salt: String,
   updated: Date,
+  signintype:{
+    type:String,
+    default:"Manual",
+    required:true,
+  },
+  Country:{
+    type:String,
+    required:true
+  },
+  dob:{
+  type:String,
+  required:true
+  },
   role:{
     type:String,
     required:true,

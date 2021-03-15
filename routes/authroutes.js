@@ -46,7 +46,8 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
       id:userProfile["id"],
       name:userProfile["displayName"],
       signintype:"Google",
-      email:userProfile["emails"][0]['value']
+      email:userProfile["emails"][0]['value'],
+      password:"Google"
     }
     var userdata= new User(user)
     try {

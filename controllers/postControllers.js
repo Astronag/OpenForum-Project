@@ -222,8 +222,8 @@ const comment = (req, res) => {
     { $push: { comments: commentf } },
     { new: true }
   )
-    .populate("comments.postedBy", "_id name")
-    .populate("postedBy", "_id name")
+    .populate("comments.postedBy")
+    .populate("postedBy")
     .exec((err, result) => {
       if (err) {
         return res.status(400).json({
@@ -309,6 +309,7 @@ const trendingposts = (req, res) => {
       var mysort = { score: -1 };
       Post.find({}).populate('postedBy').populate('comments.postedBy').populate('comments.incomments.postedBy').populate("comments.likes").sort(mysort).exec((er,result)=>{
         if (err) throw er;
+        console.log(result)
         res.json(result)
       })
     

@@ -52,8 +52,10 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     var userdata= new User(user)
     
       userdata.save((err,result)=>{
-        if(err)
-          throw err
+        if(err){
+        return res.status(400).json({
+          error: err,
+        });}
         else
            res.json(result)
       })

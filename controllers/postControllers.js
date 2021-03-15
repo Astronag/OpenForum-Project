@@ -319,7 +319,7 @@ const trendingposts = (req, res) => {
     });
   }).exec((err, posts) => {
     if (err) {
-      return res.status(400).json("Error");
+      console.log(err)
     }
    
    

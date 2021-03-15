@@ -213,7 +213,7 @@ const comment = (req, res) => {
   var commentf = {
     text: req.body.comment,
     postedBy: req.body.userId,
-    likes: 0,
+  
     
   };
 

@@ -273,7 +273,7 @@ const isPoster = (req, res, next) => {
 };
 
 const updateScore = (userId, points) => {
-  User.findOneAndUpdate({ _id: userId }, { $inc: { score: points } }).exec(
+  User.findOneAndUpdate({ _id: userId }, { $mul: { score: points } }).exec(
     (err, result) => {
       if (err) {
         return err;

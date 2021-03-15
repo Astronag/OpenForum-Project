@@ -107,7 +107,7 @@ const photo = (req, res, next) => {
 };
 
 const defaultPhoto = (req, res) => {
-  return res.sendFile(process.cwd() + '../assets/profile.png');
+  return res.sendFile(__dirname+'/profile.png');
 };
 
 const addFollowing = async (req, res, next) => {

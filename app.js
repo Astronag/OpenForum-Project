@@ -14,12 +14,14 @@ const postRoutes=require('./routes/postroutes')
 const passport=require('passport')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
+
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieparser())
 const CURRENT_WORKING_DIR = process.cwd()
-app.use(express.static(path.join(CURRENT_WORKING_DIR, "/assets")))
+console.log(CURRENT_WORKING_DIR)
+app.use(express.static(path.join(CURRENT_WORKING_DIR, "./assets")))
 
 
 app.use(passport.initialize());

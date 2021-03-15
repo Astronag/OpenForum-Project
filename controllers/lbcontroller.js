@@ -35,9 +35,7 @@ const leaderboard = (req, res) => {
     });
   }).exec((err, posts) => {
     if (err) {
-      return res.status(400).json({
-        error: err,
-      });
+      console.log("error")
     }
   
   });

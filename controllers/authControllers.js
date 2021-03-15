@@ -61,7 +61,7 @@ const requireSignin = async(req,res,next)=>{
    
     req.user = await User.findById(userId); 
     
-    if(req.user)
+    if(req.user||req.session.user)
       next();
     else 
       res.status(400).json("error auth") 

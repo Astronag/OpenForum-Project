@@ -213,8 +213,10 @@ const uncomment = (req, res) => {
 };
 
 const isPoster = (req, res, next) => {
-  let isPoster = req.post && req.auth && req.post.postedBy._id == req.auth._id
-  isPoster=req.auth.role=="Admin"
+  let isPoster = req.post && req.user && req.post.postedBy._id == req.user._id
+  isPoster=req.user.role=="Admin"
+  
+  
   
   if (!isPoster) {
     return res.status("403").json({

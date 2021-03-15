@@ -50,20 +50,22 @@ const signout = (req, res) => {
   });
 };
 
-
-
-const requireSignin = (req, res, next) => {
-  console.log(req.session.user)
-  if (
-    expressJwt({
-      secret: config.jwtSecret,
-      userProperty: "auth",
-      algorithms: ["sha1", "RS256", "HS256"],
-    }) ||
-    req.session.user
-  )
-    next();
-};
+const requireSignin = async(req,res)=>{
+  
+    var accessToken =req.headers['Authorization'];
+    accessToken=accessToken.replace(/^Bearer\s+/, "");
+    const { userId, exp } = await jwt.verify(accessToken, config.jwtSecret);
+    // Check if token has expired
+    if (exp < Date.now().valueOf() / 1000) { 
+     return res.status(401).json({ error: "JWT token has expired, please login to obtain a new one" });
+    } 
+    req.user = await User.findById(userId); 
+    if(req.user)
+      next();
+    else 
+      res.status(400).json("error auth") 
+   
+}
 
 const hasAuthorization = (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;

@@ -27,7 +27,7 @@ const leaderboard = (req, res) => {
       );
       var mysort = { score: -1 };
       User.find().sort(mysort).exec((err,result)=>{
-        if (err) throw err;
+        if (err) res.json({message:"error"});
         else
            res.json(result)
       })

@@ -43,7 +43,7 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
     res.json(userProfile)
     console.log(userProfile["id"])
     var user={
-      id:mongoose.Types.ObjectId(userProfile["id"]),
+      id:userProfile["id"],
       name:userProfile["displayName"],
       signintype:"Google",
       email:userProfile["emails"][0]['value']

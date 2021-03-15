@@ -299,7 +299,7 @@ const trendingposts = (req, res) => {
       console.log(diffDays);
       const updated = Post.findByIdAndUpdate(
         id,
-        {$set:{score: (likes+comments)/diffDays} },
+        {$inc:{score: (likes*comments)/diffDays} },
         function (errr, doc) {
           if (errr) {
             console.log(err);

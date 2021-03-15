@@ -15,7 +15,7 @@ const leaderboard = (req, res) => {
       console.log(diffDays);
       User.findByIdAndUpdate(
         userid,
-        {$inc:{ score: (likes + comments) / diffDays }},
+        {$inc:{ score: (likes*comments) / diffDays }},
         function (errr, doc) {
           if (errr) {
             console.log(err);

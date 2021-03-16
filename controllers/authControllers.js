@@ -54,7 +54,6 @@ const requireSignin = async(req,res,next)=>{
   
     var accessToken =req.headers.authorization
     console.log(accessToken)
-    if(accessToken!=undefined){
     accessToken=accessToken.replace(/^Bearer\s+/, "");
     console.log(accessToken)
     const userId = await jwt.verify(accessToken, config.jwtSecret);
@@ -67,9 +66,7 @@ const requireSignin = async(req,res,next)=>{
     }
     else
        res.status(401).send("Not authorized")
-  }
-    else 
-     next()
+
    
 }
 

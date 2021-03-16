@@ -44,46 +44,45 @@ router
   .get(
     passport.authenticate("google", { failureRedirect: "/error" }),
     async function (req, res) {
-      let usertofind = await User.findOne({
-        email: userProfile["emails"][0]["value"],
-      });
-      var user = {
+     const user = {
         _id: userProfile["id"],
         name: userProfile["displayName"],
         signintype: "Google",
         email: userProfile["emails"][0]["value"],
         password: "Google",
       };
-      if (!usertofind) {
+    
         
         var userdata = new User(user);
 
-        userdata.save((err, result) => {
+        await userdata.save((err, result) => {
           if (err) {
             return res.status(400).json({
               error: err,
             });
-          }
-        });}
-
-        const token = jwt.sign(
-          {
-            _id: user.id,
-          },
-          config.jwtSecret
-        );
-
-        res.cookie("t", token, {
-          expire: new Date() + 9999,
-        });
-
-        return res.json({
-          token,
-          user: { _id: user._id, name: user.name, email: user.email },
-        });
+          }else{
+          const token = jwt.sign(
+            {
+              _id: user.id,
+            },
+            config.jwtSecret
+          );
+  
+          res.cookie("t", token, {
+            expire: new Date() + 9999,
+          });
+  
+          return res.json({
+            token,
+            user: { _id: user._id, name: user.name, email: user.email },
+          });
+        }
+        })
+      })
+        
       
-    }
-  );
+    
+  
 
 router.get("/logout", (req, res) => {
   res.clearCookie("t");

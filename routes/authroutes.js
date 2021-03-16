@@ -45,7 +45,7 @@ router
     passport.authenticate("google", { failureRedirect: "/error" }),
     async function (req, res) {
      const user = {
-        _id: userProfile["id"],
+        id: userProfile["id"],
         name: userProfile["displayName"],
         signintype: "Google",
         email: userProfile["emails"][0]["value"],
@@ -63,7 +63,7 @@ router
           }else{
           const token = jwt.sign(
             {
-              _id: user.id,
+              _id: mongoose.Types.ObjectId(user.id),
             },
             config.jwtSecret
           );
@@ -74,7 +74,7 @@ router
   
           return res.json({
             token,
-            user: { _id: user._id, name: user.name, email: user.email },
+            user: { _id:  mongoose.Types.ObjectId(user.id), name: user.name, email: user.email },
           });
         }
         })

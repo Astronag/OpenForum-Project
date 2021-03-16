@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const user = require("../models/user");
 const User = require("../models/user");
 
 const leaderboard = (req, res) => {
@@ -13,6 +14,7 @@ const leaderboard = (req, res) => {
       const diffTime = Math.abs(date2 - data.created);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       console.log(diffDays);
+      const {followers,following}=User.findById(userid,{followers:1,following:1})
       User.findByIdAndUpdate(
         userid,
         {$inc:{ score: (likes*comments) / diffDays }},

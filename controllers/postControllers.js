@@ -311,9 +311,9 @@ const trendingposts = (req, res) => {
       console.log(updated)
       var mysort = { score: -1 };
       Post.find({}).populate('postedBy').populate('comments.postedBy').populate('comments.incomments.postedBy').populate("comments.likes").sort(mysort).exec((er,result)=>{
-        if (err) throw err
-        console.log(result)
-        res.json(result)
+        if (er) res.json(er)
+        else
+          res.json(result)
       })
     
     });

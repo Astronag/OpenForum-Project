@@ -7,7 +7,7 @@ const config = require("../config");
 const Post = require("../models/post");
 const mongoose = require("mongoose");
 const User = require("../models/user");
-const jwt = require("jsonwebtoken");
+const jwt=require('jsonwebtoken')
 
 var userProfile;
 
@@ -48,13 +48,12 @@ router
         email: userProfile["emails"][0]["value"],
       });
       var user = {
-        id: userProfile["id"],
+        _id: userProfile["id"],
         name: userProfile["displayName"],
         signintype: "Google",
         email: userProfile["emails"][0]["value"],
         password: "Google",
       };
-      var updatedresult={}
       if (!usertofind) {
         
         var userdata = new User(user);
@@ -65,13 +64,11 @@ router
               error: err,
             });
           }
-          else
-           updatedresult=JSON.parse(result)
         });}
 
         const token = jwt.sign(
           {
-            _id: updatedresult.id,
+            _id: user.id,
           },
           config.jwtSecret
         );
@@ -82,7 +79,7 @@ router
 
         return res.json({
           token,
-          user: { _id: updatedresult.id, name: updatedresult.name, email: updatedresult.email },
+          user: { _id: user.id, name: user.name, email: user.email },
         });
       
     }

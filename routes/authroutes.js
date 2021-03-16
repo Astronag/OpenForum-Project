@@ -66,7 +66,7 @@ router
             });
           }
           else
-           updatedresult=result
+           updatedresult=JSON.parse(result)
         });}
 
         const token = jwt.sign(

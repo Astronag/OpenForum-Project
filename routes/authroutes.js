@@ -62,10 +62,10 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
           error: err,
         });}
         else
-           res.json(result)
+           res.status(200).json(result)
       })}
     else
-      res.json(usertofind)
+      res.status(200).json(usertofind)
      
       
   

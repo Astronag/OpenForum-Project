@@ -60,6 +60,7 @@ const requireSignin = async(req,res,next)=>{
     // Check if token has expired
    
     req.user = await User.findById(userId); 
+  
     if(req.user){
     
       next();
@@ -71,9 +72,15 @@ const requireSignin = async(req,res,next)=>{
 }
 
 const hasAuthorization = (req, res, next) => {
-  const authorized = req.profile && req.user && req.profile._id == req.user._id;
-  
-  if (!authorized) {
+  console.log(req.profile._id)
+  console.log(req.user._id)
+  let auth=false;
+  if(String(req.profile._id) ==String(req.user._id))
+  {
+     auth=true
+  }
+  console.log(auth)
+  if (!auth) {
     return res.status("403").json({
       error: "User is not authorized",
     });

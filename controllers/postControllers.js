@@ -16,7 +16,6 @@ const create = (req, res, next) => {
     }
     let post = new Post(fields);
     post.postedBy = req.profile;
-    console.log(req.profile.name)
     post.username=String(req.profile.name)
     if (files.photo) {
       post.photo.data = fs.readFileSync(files.photo.path);
@@ -256,7 +255,6 @@ const uncomment = (req, res) => {
 
 const isPoster = (req, res, next) => {
   let isPoster = (String(req.user._id) === String(req.post.postedBy._id));
-  console.log(req.user)
   let isPosteradmin=req.user.role=="Admin"
   if (isPoster||isPosteradmin) {
    next()
@@ -289,19 +287,15 @@ const trendingposts = (req, res) => {
     
     
       var comments = data.comments.length;
-      console.log(comments);
       const date2 = new Date();
       const diffTime = Math.abs(date2 - data.created);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      console.log(diffDays);
       Post.findByIdAndUpdate(
         id,
         {$inc:{score: (likes*comments)/diffDays} },
         function (errr, doc) {
           if (errr) {
             console.log(err);
-          } else {
-            console.log("Updated User : ", doc);
           }
         }
       );

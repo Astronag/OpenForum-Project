@@ -286,4 +286,4 @@ describe("User signout", () => {
 
 module.exports = {otherUserId};
 
-process.env.NODE_ENV = 'node';
+process.env.NODE_ENV = 'development';

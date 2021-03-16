@@ -53,9 +53,7 @@ const signout = (req, res) => {
 const requireSignin = async(req,res,next)=>{
   
     var accessToken =req.headers.authorization
-    console.log(accessToken)
     accessToken=accessToken.replace(/^Bearer\s+/, "");
-    console.log(accessToken)
     const userId = await jwt.verify(accessToken, config.jwtSecret);
     // Check if token has expired
    
@@ -72,14 +70,11 @@ const requireSignin = async(req,res,next)=>{
 }
 
 const hasAuthorization = (req, res, next) => {
-  console.log(req.profile._id)
-  console.log(req.user._id)
   let auth=false;
   if(String(req.profile._id) ==String(req.user._id))
   {
      auth=true
   }
-  console.log(auth)
   if (!auth) {
     return res.status("403").json({
       error: "User is not authorized",

@@ -264,4 +264,4 @@ describe("Delete a user", () => {
   });
 });
 
-process.env.NODE_ENV = 'node';
+process.env.NODE_ENV = 'development';

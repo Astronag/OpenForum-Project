@@ -9,11 +9,9 @@ const leaderboard = (req, res) => {
       var likes = data.likes.length;
 
       var comments = data.comments.length;
-      console.log(comments);
       const date2 = new Date();
       const diffTime = Math.abs(date2 - data.created);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      console.log(diffDays);
       
       
       User.findByIdAndUpdate(
@@ -22,8 +20,6 @@ const leaderboard = (req, res) => {
         function (errr, doc) {
           if (errr) {
             console.log(err);
-          } else {
-            console.log("Updated User : ", doc);
           }
         }
       );

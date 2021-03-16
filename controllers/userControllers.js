@@ -4,9 +4,7 @@ const fs = require("fs");
 const extend = require("extend");
 
 const create = async(req, res) => {
-  console.log("hey there")
   const user = new User(req.body);
-  console.log(req.body)
   try {
   await user.save();
     return res.status(200).json({

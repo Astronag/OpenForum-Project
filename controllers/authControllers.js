@@ -54,15 +54,20 @@ const requireSignin = async(req,res,next)=>{
   
     var accessToken =req.headers.authorization
     console.log(accessToken)
+    if(accessToken){
     accessToken=accessToken.replace(/^Bearer\s+/, "");
     console.log(accessToken)
     const userId = await jwt.verify(accessToken, config.jwtSecret);
     // Check if token has expired
    
     req.user = await User.findById(userId); 
+    if(req.user){
     
-    if(req.user||req.session.user)
       next();
+    }
+    else
+       res.status(401).send("Not authorized")
+  }
     else 
       res.status(400).json("error auth") 
    

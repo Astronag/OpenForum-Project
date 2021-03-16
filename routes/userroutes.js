@@ -34,7 +34,7 @@ router
   .put(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.update)
   .delete(authCtrl.requireSignin, authCtrl.hasAuthorization, userCtrl.remove);
 
-router.route("/leaderboard").get(authCtrl.requireSignin,lbcontrol.leaderboard)
+router.route("/leaderboard").get(lbcontrol.leaderboard)
 
 router.param("userId", userCtrl.userByID);
 

@@ -255,12 +255,9 @@ const uncomment = (req, res) => {
 };
 
 const isPoster = (req, res, next) => {
-  let isPoster=req.user.id==req.post.postedBy
+  let isPoster = (String(req.user._id) === String(req.post.postedBy._id));
   console.log(req.user)
   let isPosteradmin=req.user.role=="Admin"
-  
-  
-  
   if (isPoster||isPosteradmin) {
    next()
   }

@@ -41,9 +41,16 @@ app.use(passport.session());
 
 
 
-mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
-    console.log('connected to db')
-})
+if(process.env.NODE_ENV === 'test'){
+  mongoose.connect(config.mongoTestUri,{ useNewUrlParser: true },()=>{
+    console.log('connected to testing db')
+  })
+}
+else{
+  mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
+      console.log('connected to db')
+  })
+}
 mongoose.set('useFindAndModify', false);
 mongoose.connection.on('error', () => {
   throw new Error(`unable to connect to database`)
@@ -54,3 +61,5 @@ app.use('/', postRoutes)
 
 
 app.listen(config.port)
+
+module.exports = {app};

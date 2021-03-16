@@ -74,7 +74,7 @@ const requireSignin = async(req,res,next)=>{
 }
 
 const hasAuthorization = (req, res, next) => {
-  const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
+  const authorized = req.profile && req.user && req.profile._id == req.user._id;
   const googleauthorized = req.session.user;
   if (authorized == 0 && googleauthorized == 0) {
     return res.status("403").json({

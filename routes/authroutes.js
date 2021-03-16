@@ -7,7 +7,7 @@ const config = require("../config");
 const Post = require("../models/post");
 const mongoose = require("mongoose");
 const User = require("../models/user");
-const jwt=require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 var userProfile;
 
@@ -26,7 +26,7 @@ passport.use(
       clientID:
         "789965715216-2sbi4nk44kbaabtsqt7vlddgklieksq9.apps.googleusercontent.com",
       clientSecret: "Jtdl2O8dBSJnTUrJ9I6UEBhf",
-      callbackURL: "https://openforumsocial.herokuapp.com/auth/google/callback",
+      callbackURL: "http://localhost:80/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       userProfile = profile;
@@ -44,45 +44,57 @@ router
   .get(
     passport.authenticate("google", { failureRedirect: "/error" }),
     async function (req, res) {
-     const user = {
+      var user = {
         id: userProfile["id"],
         name: userProfile["displayName"],
-        signintype: "Google",
+
         email: userProfile["emails"][0]["value"],
         password: "Google",
       };
-    
-        
-        var userdata = new User(user);
+      let userdata = await User.findOne({
+        email: user.email,
+      });
 
-        await userdata.save((err, result) => {
-          if (err) {
-            return res.status(400).json({
-              error: err,
+      var userdata2 = new User(user);
+      if (!userdata) {
+        userdata2.save(function (error, result) {
+          if (error) console.log(error);
+          else {
+            const token = jwt.sign(
+              {
+                _id: result._id,
+              },
+              config.jwtSecret
+            );
+
+            res.cookie("t", token, {
+              expire: new Date() + 9999,
             });
-          }else{
-          const token = jwt.sign(
-            {
-              _id: user.id,
-            },
-            config.jwtSecret
-          );
-  
-          res.cookie("t", token, {
-            expire: new Date() + 9999,
-          });
-  
-          return res.json({
-            token,
-            user: { _id:  user.id, name: user.name, email: user.email },
-          });
-        }
-        })
-      })
-        
-      
-    
-  
+
+            return res.json({
+              token,
+              user: { _id: result._id, name: result.name, email: result.email },
+            });
+          }
+        });
+      }else{
+      const token = jwt.sign(
+        {
+          _id: userdata._id,
+        },
+        config.jwtSecret
+      );
+
+      res.cookie("t", token, {
+        expire: new Date() + 9999,
+      });
+
+      return res.json({
+        token,
+        user: { _id: userdata._id, name: userdata.name, email: userdata.email },
+      });
+    }}
+  );
 
 router.get("/logout", (req, res) => {
   res.clearCookie("t");

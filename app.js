@@ -40,15 +40,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use(
-  session({
-    secret: 'keyboard',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: config.mongoUri }),
-  
-  })
-)
+
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
     console.log('connected to db')
 })

@@ -15,7 +15,7 @@ const passport=require('passport')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
 
-var allowedDomains = ['https://accounts.google.com/o/oauth2/v2/auth', 'http://localhost:3000'];
+var allowedDomains = ['https://accounts.google.com/o/oauth2/v2/auth', 'http://localhost:3000','https://openforumsocial.herokuapp.com/auth/google/callback'];
 app.use(cors({
   origin: function (origin, callback) {
     // bypass the requests with no origin (like curl requests, mobile apps, etc )

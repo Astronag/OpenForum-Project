@@ -7,6 +7,7 @@ const config = require("../config");
 const Post = require("../models/post");
 const mongoose = require("mongoose");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
 
 var userProfile;
 

@@ -54,6 +54,7 @@ router
         email: userProfile["emails"][0]["value"],
         password: "Google",
       };
+      var updatedresult={}
       if (!usertofind) {
         
         var userdata = new User(user);
@@ -64,11 +65,13 @@ router
               error: err,
             });
           }
+          else
+           updatedresult=result
         });}
 
         const token = jwt.sign(
           {
-            _id: user.id,
+            _id: result['id'],
           },
           config.jwtSecret
         );
@@ -79,7 +82,7 @@ router
 
         return res.json({
           token,
-          user: { _id: user.id, name: user.name, email: user.email },
+          user: { _id: result['id'], name: result['name'], email: result['email'] },
         });
       
     }

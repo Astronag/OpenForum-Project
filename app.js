@@ -14,6 +14,9 @@ const postRoutes=require('./routes/postroutes')
 const passport=require('passport')
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
+const redis = require('redis');
+const redisClient = redis.createClient();
+const redisStore = require('connect-redis')(session);
 
 var allowedDomains = ['https://accounts.google.com/o/oauth2/v2/auth', 'http://localhost:3000','https://openforumsocial.herokuapp.com/auth/google/callback'];
 app.use(cors({
@@ -39,16 +42,14 @@ app.use(express.static(path.join(CURRENT_WORKING_DIR, "./assets")))
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use(
-  session({
-    secret: 'keyboard',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: config.mongoUri }),
-  
-  })
-)
+app.use(session({
+  secret: 'ThisIsHowYouUseRedisSessionStorage',
+  name: '_redisPractice',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
+  store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
+}));
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
     console.log('connected to db')
 })

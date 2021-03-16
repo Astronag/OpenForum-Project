@@ -48,8 +48,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
-  store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
-}));
+  store: new redisStore({ host: config.redisurl, port: config.redisport, client: redisClient, ttl: 86400 }),
+}))
 mongoose.connect(config.mongoUri,{ useNewUrlParser: true },()=>{
     console.log('connected to db')
 })

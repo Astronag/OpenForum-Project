@@ -14,8 +14,7 @@ const leaderboard = (req, res) => {
       const diffTime = Math.abs(date2 - data.created);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       console.log(diffDays);
-      const followers=User.find({}).project({ _id : 0, followers : 1 }).toArray()
-      console.log(followers)
+      
       
       User.findByIdAndUpdate(
         userid,

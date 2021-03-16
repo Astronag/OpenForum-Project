@@ -231,7 +231,7 @@ const comment = (req, res) => {
           error: err,
         });
       }
-      updateScore(req.body.userId, 1);
+      
       res.json(result);
     });
 };
@@ -297,7 +297,7 @@ const trendingposts = (req, res) => {
       const diffTime = Math.abs(date2 - data.created);
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       console.log(diffDays);
-      const updated = Post.findByIdAndUpdate(
+      Post.findByIdAndUpdate(
         id,
         {$inc:{score: (likes*comments)/diffDays} },
         function (errr, doc) {
@@ -308,13 +308,8 @@ const trendingposts = (req, res) => {
           }
         }
       );
-      console.log(updated)
-      var mysort = { score: -1 };
-      Post.find({}).populate('postedBy').populate('comments.postedBy').populate('comments.incomments.postedBy').populate("comments.likes").sort(mysort).exec((er,result)=>{
-        if (er) res.json(er)
-        else
-          res.json(result)
-      })
+      
+      
     
     });
   }).exec((err, posts) => {
@@ -325,6 +320,12 @@ const trendingposts = (req, res) => {
    
 
   });
+  var mysort = { score: -1 };
+      Post.find({}).populate('postedBy').populate('comments.postedBy').populate('comments.incomments.postedBy').populate("comments.likes").sort(mysort).exec((er,result)=>{
+        if (er) res.json(er)
+        else
+          res.json(result)
+      })
 };
 
 module.exports = {

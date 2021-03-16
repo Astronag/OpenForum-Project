@@ -115,6 +115,7 @@ const addFollowing = async (req, res, next) => {
     await User.findByIdAndUpdate(req.body.userId, {
       $push: { following: req.body.followId },
     });
+    updateScore(req.body.userId,-0.5)
     next();
   } catch (err) {
     return res.status(400).json({
@@ -135,6 +136,7 @@ const addFollower = async (req, res) => {
       .exec();
     result.hashed_password = undefined;
     result.salt = undefined;
+    updateScore(req.body.followId,1)
     res.json(result);
   } catch (err) {
     return res.status(400).json({
@@ -148,6 +150,7 @@ const removeFollowing = async (req, res, next) => {
     await User.findByIdAndUpdate(req.body.userId, {
       $pull: { following: req.body.unfollowId },
     });
+    updateScore(req.body.userId,0.5)
     next();
   } catch (err) {
     return res.status(400).json({
@@ -167,6 +170,7 @@ const removeFollower = async (req, res) => {
       .exec();
     result.hashed_password = undefined;
     result.salt = undefined;
+    updateScore(req.body.unfollowId,-1)
     res.json(result);
   } catch (err) {
     return res.status(400).json({
@@ -186,6 +190,16 @@ const findPeople = async (req, res) => {
       error: err,
     });
   }
+};
+
+const updateScore = (userId, points) => {
+  User.findOneAndUpdate({ _id: userId }, { $inc: { score: points } }).exec(
+    (err, result) => {
+      if (err) {
+        return err;
+      }
+    }
+  );
 };
 
 module.exports={

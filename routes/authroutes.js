@@ -71,7 +71,7 @@ router
 
         const token = jwt.sign(
           {
-            _id: updatedresult['id'],
+            _id: updatedresult.id,
           },
           config.jwtSecret
         );
@@ -82,7 +82,7 @@ router
 
         return res.json({
           token,
-          user: { _id: updatedresult['id'], name: updatedresult['name'], email: updatedresult['email'] },
+          user: { _id: updatedresult.id, name: updatedresult.name, email: updatedresult.email },
         });
       
     }

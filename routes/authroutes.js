@@ -37,9 +37,9 @@ router.get('/auth/google',
   passport.authenticate('google', { scope : ['profile','email'] }));
  
 router.route('/auth/google/callback').get(passport.authenticate('google', { failureRedirect: '/error' }),async function(req,res){
-  
-    req.session.user=userProfile
-    console.log(req.session.user)
+  const sess = req.session;
+    sess.id=userProfile["id"]
+    console.log(req.session.id)
     
     console.log(userProfile["id"])
     let usertofind = await User.findOne({
@@ -75,7 +75,9 @@ router.route('/auth/google/callback').get(passport.authenticate('google', { fail
 )
 
 router.get('/logout', (req, res) =>{ 
-   req.session.destroy()
+  const sess=req.session 
+  console.log(sess.id)
+  sess.destroy()
    res.send("logged out")
 
 });

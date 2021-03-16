@@ -69,7 +69,8 @@ const requireSignin = async(req,res,next)=>{
        res.status(401).send("Not authorized")
   }
     else 
-      res.status(400).json("error auth") 
+     if(req.session.user)
+       next()
    
 }
 

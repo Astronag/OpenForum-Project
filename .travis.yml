@@ -3,6 +3,3 @@ node_js:
   - stable
 services:
   - mongodb
-before_script:
-  - sleep 15
-  - mongo testing

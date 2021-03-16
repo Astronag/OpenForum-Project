@@ -26,7 +26,7 @@ passport.use(
       clientID:
         "789965715216-2sbi4nk44kbaabtsqt7vlddgklieksq9.apps.googleusercontent.com",
       clientSecret: "Jtdl2O8dBSJnTUrJ9I6UEBhf",
-      callbackURL: "http://localhost:80/auth/google/callback",
+      callbackURL: "https://openforumsocial.herokuapp.com/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
       userProfile = profile;

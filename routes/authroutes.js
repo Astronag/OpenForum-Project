@@ -63,7 +63,7 @@ router
           }else{
           const token = jwt.sign(
             {
-              _id: mongoose.Types.ObjectId(user.id),
+              _id: user.id,
             },
             config.jwtSecret
           );
@@ -74,7 +74,7 @@ router
   
           return res.json({
             token,
-            user: { _id:  mongoose.Types.ObjectId(user.id), name: user.name, email: user.email },
+            user: { _id:  user.id, name: user.name, email: user.email },
           });
         }
         })

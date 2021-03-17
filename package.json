@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha --timeout 10000 --exit --require babel-register test/tests.js",
+    "test": "nyc --reporter=html --reporter=text mocha test/tests.js --timeout 10000 --exit ",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "node app.js"
   },

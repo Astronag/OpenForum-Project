@@ -1,5 +1,8 @@
 # Open Forum Social
 
+[![Build Status](https://travis-ci.org/Astronag/OpenForum-Project.svg?branch=development)](https://travis-ci.org/Astronag/OpenForum-Project)
+[![Coverage Status](https://coveralls.io/repos/github/Astronag/OpenForum-Project/badge.svg)](https://coveralls.io/github/Astronag/OpenForum-Project)
+
 A web application providing a platform for users to socialize.
 
 ## Features
